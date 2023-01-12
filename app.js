@@ -20,6 +20,10 @@ const User = require('./models/user')
 const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campgrounds')
 const reviewRoutes = require('./routes/reviews');
+const wishlistRoutes = require('./routes/wishlist');
+const userProfileRoute = require('./routes/userProfile')
+
+
 const mongoSanitize = require('express-mongo-sanitize');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -143,6 +147,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     // console.log(req.query)
+    res.locals.user = req.user;
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
@@ -152,9 +157,14 @@ app.use((req, res, next) => {
 app.use('/', userRoutes);
 app.use('/campgrounds', campgroundRoutes)
 app.use('/campgrounds/:id/reviews', reviewRoutes)
-
+app.use('/', wishlistRoutes)
+app.use('/', userProfileRoute)
 app.get('/', (req, res) => {
     res.render('home')
+})
+
+app.get('/contact', async(req, res) => {
+    res.render('contact');
 })
 
 
@@ -169,8 +179,8 @@ app.use((err, req, res, next) => {
 
 })
 
-const port = process.env.Port || 3000;
+// const port = process.env.Port || 3000;
 
-app.listen(port, () => {
+app.listen(3000, () => {
     console.log('Serving on port 3000!!')
 })

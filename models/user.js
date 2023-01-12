@@ -8,8 +8,15 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true
-    }
-
+    },
+    avatar: String,
+    firstName: String,
+    lastName: String,
+    phone: Number,
+    street: String,
+    city: String,
+    state: String,
+    zipCode: Number
 });
 
 userSchema.plugin(passportLocalMongoose);

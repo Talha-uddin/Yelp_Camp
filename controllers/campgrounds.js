@@ -4,9 +4,18 @@ const mapBoxToken = process.env.MAPBOX_TOKEN;
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding")
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
 
+
+
 module.exports.index = async(req, res) => {
-    const campgrounds = await Campground.find({});
-    res.render('campgrounds/index', { campgrounds })
+    if (req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        const campgrounds = await Campground.find({ title: regex })
+        res.render('campgrounds/index', { campgrounds })
+
+    } else {
+        const campgrounds = await Campground.find({})
+        res.render('campgrounds/index', { campgrounds });
+    }
 }
 
 module.exports.renderNewForm = (req, res) => {
@@ -83,3 +92,8 @@ module.exports.deleteCampgrounds = async(req, res) => {
     req.flash('success', 'Successfully deleted Campground!')
     res.redirect('/campgrounds')
 }
+
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};

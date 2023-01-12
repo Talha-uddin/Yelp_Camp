@@ -37,6 +37,10 @@ const CampgroundSchema = new Schema({
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: 'Review'
+    }],
+    wishlist: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Wishlist'
     }]
 }, opts);
 CampgroundSchema.virtual('properties.popUpMarkup').get(function() {

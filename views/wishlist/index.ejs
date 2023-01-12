@@ -1,0 +1,44 @@
+<% layout('layouts/boilerplate') %>
+
+    <link rel="stylesheet" href="/stylesheets/wishlist.css">
+    <h1>Wishlist</h1>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <% for (let item of wishlist) { %>
+        <div class="container mb-4">
+            <div class="row">
+
+                <!-- Wishlist-->
+                <div class="col-lg-8 pb-5">
+                    <!-- Item-->
+
+                    <div class="cart-item d-md-flex justify-content-between">
+                        <div class="px-3 my-3">
+
+                            <a class="cart-item-product" href="#">
+                                <div class="cart-item-product-thumb"><img src="<%=item.images%>" alt="Product"></div>
+                                <div class="cart-item-product-info">
+                                    <h4 class="cart-item-product-title">
+                                        <a href="/campgrounds/<%=item.groundId%>">
+                                            <%= item.title%>
+                                        </a>
+                                    </h4>
+                                    <div class="text-lg text-body font-weight-medium pb-1">$
+                                        <%=item.price %>
+                                    </div><span>Description: <span class="text-success font-weight-medium">
+                                            <%=item.description %>
+                                        </span>
+                                    <form class="d-inline" action="/wishlist/<%=item._id%>?_method=DELETE" method="post">
+                                        <p><button class="btn btn-danger">Delete</button></p>
+                                    </form>
+                                </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <% } %>
+            </link>
