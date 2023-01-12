@@ -9,6 +9,10 @@ const wishlistSchema = new Schema({
     price: Number,
     location: String,
     description: String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 })
 
 module.exports = mongoose.model('Wishlist', wishlistSchema);
